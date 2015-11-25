@@ -503,9 +503,11 @@ function ding_permissions_secure_permissions($role) {
       'administer place2book settings',
       'administer shortcuts',
       'administer url aliases',
+      'administer users',
       'administer user role 4',
       'administer user role 5',
       'administer user role 7',
+      'administer user role 9',
       'assign editor role',
       'assign guest blogger role',
       'assign local editor role',
@@ -579,6 +581,7 @@ function ding_permissions_secure_permissions($role) {
       'edit any ding_news content',
       'edit any ding_page content',
       'edit any ding_rolltab content',
+      'edit any ding_staff_profile profile',
       'edit any document files',
       'edit any image files',
       'edit any new_materials content',
@@ -898,6 +901,18 @@ function ding_permissions_secure_permissions($role) {
       'edit own ding_staff_profile profile',
     ),
   );
+
+  // Add editor specific permissions by node type,
+  // using override node options module permissions.
+  $node_types = node_permissions_get_configured_types();
+  foreach ($node_types as $node_type) {
+    if (in_array('create ' . $node_type . ' content', $permissions['editor'])) {
+      $permissions['editor'][] = 'override ' . $node_type . ' promote to front page option';
+      $permissions['editor'][] = 'override ' . $node_type . ' authored on option';
+      $permissions['editor'][] = 'override ' . $node_type . ' authored by option';
+    }
+  }
+
   if (isset($permissions[$role])) {
     return $permissions[$role];
   }
