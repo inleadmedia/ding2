@@ -320,3 +320,10 @@ function ding2_update_7013() {
 function ding2_update_7014() {
   module_enable(array('pagepreview'));
 }
+
+/**
+ * Enable manualcrop module.
+ */
+function ding2_update_7015() {
+  module_enable(array('manualcrop'));
+}
